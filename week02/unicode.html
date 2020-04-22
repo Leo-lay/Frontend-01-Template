@@ -1,0 +1,14 @@
+<script>
+ for (let index = 0; index < 128; index++) {
+    document.write(`<span style="background-color: lightgreen;">${String.fromCharCode(index)} </span>`)   
+ }
+ // 中文变量
+ var 前端 = 1;
+ 
+//  浏览器不支持 会报错,但是看winter老师是可以执行的~有点奇怪。
+//  var \u21069\u31471 = 1;
+
+ // 查看unicode码
+console.log('前端'.codePointAt(0), '前端'.codePointAt(1));
+console.log(前端)
+</script>

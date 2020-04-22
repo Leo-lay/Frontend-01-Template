@@ -1,0 +1,15 @@
+<script>
+    var a = 0.1;
+    var b = 0.2;
+
+    const memory = new Float64Array(1);
+    memory[0] = a;
+    const unitMemory = new Uint8Array(memory.buffer);
+    console.log(memory, unitMemory);
+    for (let index = 0; index < 8; index++) {
+        // console.log(unitMemory[index].toString(2));
+        let s = (unitMemory[index].toString(2));
+        console.log(new Array(8 - s.length).join('0') + s)
+    }
+    
+</script>
