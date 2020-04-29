@@ -24,7 +24,28 @@
   * |表示或
   * +表示至少一次
   ```
-  随堂小练习  ./test
+  <Program>:="a"+
+
+<Number> = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+
+<DecimalNumber> = "0" | (("0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9")<Number>*)
+// 正则方式定义
+<DecimalNumber> = /0|[1-9][0-9]*/
+// 乘除
+<MultiplicativeExpression> = <DecimalNumber> |
+    <MultiplicativeExpression> '*' <DecimalNumber> |
+    <MultiplicativeExpression> '/' <DecimalNumber>
+// 加减运算
+<AdditiveExpression> = <MultiplicativeExpression> |
+    <AdditiveExpression> "+" <MultiplicativeExpression> |
+    <AdditiveExpression> "-" <MultiplicativeExpression>
+// 逻辑运算
+<LogicExpression> = <AdditiveExpression> |
+    <LogicExpression> "||" <AdditiveExpression> |
+    <LogicExpression> "&&" <AdditiveExpression>
+
+<PrimaryExpression> = <DecimalNumber> |
+    "(" <LogicExpression ")"
   ```
 
 ### 图灵完备性
