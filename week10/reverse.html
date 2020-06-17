@@ -1,0 +1,23 @@
+<div id="container">
+    <div>1
+        <span>1.1</span>
+    </div>
+    <p>2
+        <div>2.1</div>
+        <div>2.2</div>
+    </p>
+    <div>3</div>
+    <a>4</a>
+</div>
+<script>
+    const element = document.getElementById('container');
+
+    function reverseElement(element) {
+        let len = element && element.childNodes.length;
+        while(len-- > 0) {
+            element.appendChild(element.childNodes[len])
+        }
+    }
+
+    reverseElement(element)
+</script>
