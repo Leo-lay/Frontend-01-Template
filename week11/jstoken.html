@@ -1,0 +1,28 @@
+<script>
+    var source = `
+    function sleep(t) {
+        return new Promise(function(resolve) {
+            setTimeout(resolve, t);
+        })
+    }
+    `;
+
+    var regxp = /(function|new|return)|([ \t\n\r]+)|([a-zA-Z][a-zA-Z0-9]*)|([\(\)\{\}\,\;])/g
+
+    var dictionary = ["keywords", "whitespace", "identifier", "punctuator"];
+
+    var token = null;
+    var lastIndex = -Infinity;
+
+    do {
+        lastIndex = regxp.lastIndex;
+        token = regxp.exec(source);
+        if(!token) break;
+
+        for (var index = 0; index < 5; index++) {
+           if(token[index]) {
+               console.log(dictionary[index - 1], token[0])
+           }
+        }
+    }   while(token)
+</script>

@@ -1,0 +1,93 @@
+<style>
+    .cell {
+        width: 6px;
+        height: 6px;
+        margin: 1px;
+        background-color: gray;
+        border-bottom: solid 1px #fff;
+        border-right: solid 1px #fff;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    #container {
+        width:900x;
+        /* display: flex; */
+        /* flex-wrap: nowrap; */
+        line-height: 7px;
+    }
+</style>
+<div id="container"></div>
+<button onclick="localStorage.map=JSON.stringify(map)">保存</button>
+<script>
+    // const map = new Array(10001).join(0).split('').map(s => Number(s));
+    const map = localStorage.map ? JSON.parse(localStorage.map) : new Array(10000).fill(0);
+    let container = document.getElementById('container');
+    
+    for(let i = 0; i< 100; i++) {
+        for(let j = 0; j< 100; j++) {
+            let cell = document.createElement('div')
+            cell.classList.add('cell')
+            
+            if (map[i * 100 + j] === 1) {
+                cell.style.backgroundColor = 'green'
+            }
+            cell.addEventListener('mouseover', () => {
+                if (mouse) {
+                    if (clear) {
+                        cell.style.backgroundColor = 'gray'
+                        map[i * 100 + j] = 0
+                    } else {
+                        cell.style.backgroundColor = 'green'
+                        map[i * 100 + j] = 1
+                    }
+                    
+                }
+            });
+
+            container.appendChild(cell)
+        }
+    }
+    let mouse = false;
+    let clear = false;
+    document.addEventListener('mousedown', e => {
+        mouse = true
+        clear = e.which === 3
+        console.log(e.which)
+    })
+    document.addEventListener('mouseup', ()=> mouse = false)
+
+    document.addEventListener('contextmenu', e => e.preventDefault())
+
+    function path(map, start, end) {
+        let stack = [start]
+        // 地图集合
+        map = map.slice();
+        // 查找路径
+        async function insert([x, y]) {
+            if (map[100 * y + x] !== 0) return;
+            if (x < 0 || y < 0 || x >= 100 || y >=100) return
+            map[100 * y + x] = 2;
+            container.children[y * 100 + x].style.backgroundColor = 'red';
+            await sleep(1);
+            stack.push([x, y])
+        }
+
+        while(stack.length) {
+            let [x, y] = stack.shift();
+            if (x === end[0] && y === end[1]) return true;
+
+            await insert([x - 1, y]);
+            await insert([x + 1, y]);
+            await insert([x, y - 1]);
+            await insert([x, y + 1]);
+        }
+        return false
+    }
+
+    function sleep(t) {
+        return new Promise(function(resolve) {
+            setTimeout(resolve, t);
+        })
+    }
+</script>
